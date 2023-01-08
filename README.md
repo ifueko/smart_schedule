@@ -1,1 +1,1 @@
-# smart_schedule
+# Smart Scheduling: Notion + Google Calendar
