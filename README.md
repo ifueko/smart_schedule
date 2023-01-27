@@ -31,13 +31,13 @@ export WORK_CALENDAR_ID="<< work calendar id >>"
 ```
 
 ## Feature TODO
-[x] Notion API Integration
-[x] G-Cal API Integration
-[x] Notion/G-Cal Sync
-    [x] Add events formatted using worl block as title and content as event description
-    [x] Adding Calendar Events from Notion that are not in google (gcal id is empty)
-    [x] Rescheduling events option
-[ ] Beter Optimization 
-    [ ] Finding better start times?
-    [ ] Gradient Descent using old calendar data?
-    [ ] Total number of hours can be split up into blocks?
+- [x] Notion API Integration
+- [x] G-Cal API Integration
+- [x] Notion/G-Cal Sync
+  - [x] Add events formatted using worl block as title and content as event description
+  - [x] Adding Calendar Events from Notion that are not in google (gcal id is empty)
+  - [x] Rescheduling events option
+- [ ] Beter Optimization 
+  - [ ] Finding better start times?
+  - [ ] Gradient Descent using old calendar data?
+  - [ ] Total number of hours can be split up into blocks?
