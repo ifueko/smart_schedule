@@ -1,6 +1,6 @@
 import requests
 import os
-from filters import today_filter, tomorrow_filter
+from filters import date_filter, today_filter, tomorrow_filter
 import pprint
 
 printer = pprint.PrettyPrinter()
@@ -55,8 +55,9 @@ def get_event_data(event, projects):
     gcal_id = "" if len(gcal_id) == 0 else gcal_id[0]
     date = event["properties"]["Goal Date"]["date"]["start"]
     created_time = event["properties"]["Created time"]["created_time"]
-    est_time = 1
     est_time = event["properties"]["Estimated Time (hours)"]["number"]
+    if not est_time:
+        est_time = 1
     if len(event["properties"]["Parent item"]["relation"]) > 0:
         pid = event["properties"]["Parent item"]["relation"][0]["id"]
         if pid in cache:
@@ -95,6 +96,26 @@ def get_event_by_id(id_):
     response = requests.get(url, headers=headers)
     data = response.json()
     return data
+
+
+def get_notion_date(start_date, end_date):
+    # Get all events for today and prior
+    url = "https://api.notion.com/v1/databases/{}/query".format(NOTION_TASK_LIST)
+    payload = {
+        "page_size": 100,
+        "filter": date_filter(start_date, end_date),
+    }
+    headers = {
+        "accept": "application/json",
+        "Notion-Version": "2022-06-28",
+        "Authorization": "Bearer {}".format(NOTION_API_KEY),
+        "content-type": "application/json",
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    data = response.json()
+    events = data["results"]
+    return events
 
 
 def get_notion_today():
@@ -156,12 +177,9 @@ def get_notion_tomorrow():
     return events
 
 
-def get_notion_events(today=True):
+def get_notion_events(start_date, end_date):
     projects = get_notion_projects()
-    if today:
-        events = get_notion_today()
-    else:
-        events = get_notion_tomorrow()
+    events = get_notion_date(start_date, end_date)
     event_data = [
         e
         for e in sorted(

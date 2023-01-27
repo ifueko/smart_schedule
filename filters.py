@@ -27,6 +27,26 @@ def today_filter():
     }
 
 
+def date_filter(start_date, end_date):
+    return {
+        "and": [
+            {"property": "Status", "status": {"does_not_equal": "Done"}},
+            {
+                "property": "Goal Date",
+                "date": {
+                    "after": start_date,
+                },
+            },
+            {
+                "property": "Goal Date",
+                "date": {
+                    "on_or_before": end_date,
+                },
+            },
+        ]
+    }
+
+
 def tomorrow_filter():
     return {
         "and": [
