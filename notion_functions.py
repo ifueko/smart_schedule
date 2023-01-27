@@ -169,7 +169,6 @@ def get_notion_events(today=True):
             key=lambda x: (
                 x["priority"],
                 float(x["estimate"]),
-                x["date"],
                 x["created_time"],
             ),
         )

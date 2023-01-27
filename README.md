@@ -37,6 +37,8 @@ export WORK_CALENDAR_ID="<< work calendar id >>"
   - [x] Add events formatted using worl block as title and content as event description
   - [x] Adding Calendar Events from Notion that are not in google (gcal id is empty)
   - [x] Rescheduling events option
+- [ ] Ability to choose start/end range for days
+- [ ] Dont schedule in the past
 - [ ] Beter Optimization 
   - [ ] Finding better start times?
   - [ ] Gradient Descent using old calendar data?
