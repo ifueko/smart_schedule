@@ -43,3 +43,4 @@ export WORK_CALENDAR_ID="<< work calendar id >>"
   - [ ] Finding better start times?
   - [ ] Gradient Descent using old calendar data?
   - [ ] Total number of hours can be split up into blocks?
+- [ ] Arbitrary timezones
