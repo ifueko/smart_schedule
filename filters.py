@@ -34,13 +34,13 @@ def date_filter(start_date, end_date):
             {
                 "property": "Goal Date",
                 "date": {
-                    "after": start_date,
+                    "on_or_before": start_date,
                 },
             },
             {
                 "property": "Goal Date",
                 "date": {
-                    "on_or_before": end_date,
+                    "before": end_date,
                 },
             },
         ]

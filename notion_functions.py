@@ -33,7 +33,7 @@ def get_event_data(event, projects):
     if len(event_content) == 0:
         description = ""
     else:
-        description = event_content[0]["paragraph"]["rich_text"][0]["plain_text"]
+        description = '\n'.join([content[content['type']]["rich_text"][0]["plain_text"] for content in event_content])
     event["properties"] = {
         str(key.encode("ascii", errors="ignore"))[2:-1].strip(): value
         for key, value in event["properties"].items()

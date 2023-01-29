@@ -11,13 +11,7 @@ MIN_PER_HR = 60.0
 
 
 def get_date_today():
-    tz = "US/Eastern"
-    dt = datetime.datetime.now()
-    today = datetime.datetime(
-        dt.year, dt.month, dt.day, 0, 0, 0, 0, tzinfo=pytz.timezone(tz)
-    )
-    return today
-
+    return get_today_delta(0, 0, 0)
 
 def get_today_delta(days, hours, minutes):
     dt = datetime.datetime.now()
@@ -30,20 +24,16 @@ def get_today_delta(days, hours, minutes):
         0,
         0,
     )
-    return today_with_time.isoformat()
+    return pytz.timezone("US/Eastern").localize(today_with_time)
 
 
 def add_day(curr_day, days=1):
     next_day = curr_day + datetime.timedelta(days=days)
-    return next_day.isoformat()
-
-
-def get_today():
-    return get_date_today().isoformat()
+    return next_day
 
 
 def get_date_relative(days=1):
-    return add_day(get_date_today(), days)
+    return add_day(get_date_today(), days).isoformat()
 
 
 def get_tomorrow():
@@ -80,7 +70,6 @@ def schedule_notion_to_google(today=True, num_days=1, reschedule=False, delete=F
 
         print("Need to schedule {} hours of events.".format(total_hours))
         print("Projects today: {}".format(" ".join(projects)))
-
         gevents = get_google_events(day_start, day_end)
         timeline = DailyTimeline(projects=projects)
         for event in gevents:
@@ -113,10 +102,10 @@ def schedule_notion_to_google(today=True, num_days=1, reschedule=False, delete=F
                 days = delta_days
                 hours = int(smart_start)
                 minutes = int(smart_start % 1 * MIN_PER_HR)
-                start_datetime = get_today_delta(days, hours, minutes)
+                start_datetime = get_today_delta(days, hours, minutes).isoformat()
                 hours = int(smart_end)
                 minutes = int(smart_end % 1 * MIN_PER_HR)
-                end_datetime = get_today_delta(days, hours, minutes)
+                end_datetime = get_today_delta(days, hours, minutes).isoformat()
                 new_event = add_google_event(
                     work_block,
                     project,
