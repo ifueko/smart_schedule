@@ -170,6 +170,7 @@ def add_google_event(
 ):
     BLOCK_TO_COLOR = {
         "Deep Work": 3,
+        "Light Work": 10,
         "Buffer Time": 7,
         "Review Time": 5,
         "Morning Focus": 7,
@@ -181,7 +182,8 @@ def add_google_event(
         "{}: {}".format("Title", event_title),
     ]
     if description != "":
-        desc_items.append("{}: {}".format("Notes", description))
+        desc_items.append("\n")
+        desc_items.append(description)
     event = {
         "summary": work_block,
         "description": "\n".join(desc_items),
@@ -221,7 +223,7 @@ def get_colors():
             print("colorId: %s" % id)
             print("  Background: %s" % color["background"])
             print("  Foreground: %s" % color["foreground"])
-        return event
+        return True 
     except HttpError as error:
         print("An error occurred: %s" % error)
         return error

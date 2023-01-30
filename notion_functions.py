@@ -30,10 +30,17 @@ def get_event_content(event_id):
 
 def get_event_data(event, projects):
     event_content = get_event_content(event["id"])
-    if len(event_content) == 0:
-        description = ""
-    else:
-        description = '\n'.join([content[content['type']]["rich_text"][0]["plain_text"] for content in event_content])
+    description = ""
+    for content in event_content:
+        type_ = content['type']
+        content = content[type_]
+        if type_ == 'video':
+            description = description + "\n" + content["external"]["url"]
+        else:
+            description = '\n'.join([description] + [r["plain_text"] for r in content["rich_text"]])
+    if description != "":
+        description = description + "\n"
+    description += event["url"]
     event["properties"] = {
         str(key.encode("ascii", errors="ignore"))[2:-1].strip(): value
         for key, value in event["properties"].items()
