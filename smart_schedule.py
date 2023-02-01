@@ -18,13 +18,14 @@ def get_today_delta(days, hours, minutes):
     today_with_time = datetime.datetime(
         dt.year,
         dt.month,
-        dt.day + days,
+        dt.day,
         hours,
         minutes,
         0,
         0,
     )
-    return pytz.timezone("US/Eastern").localize(today_with_time)
+    date_delta = today_with_time + datetime.timedelta(days=days)
+    return pytz.timezone("US/Eastern").localize(date_delta)
 
 
 def add_day(curr_day, days=1):
